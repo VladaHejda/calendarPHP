@@ -4,6 +4,8 @@
  * Calendar renderer
  * @author 2012-2014 jsem@hejdav.cz Vladislav Hejda
  * @todo která class dostane přednost - outside nebo special?
+ * @todo days callbacks
+ * @todo chyba viz nula v číslu týdnu u "Extra classes overlay"
  *
  * In patterns use:
  *   %d = Arabic number
@@ -97,6 +99,7 @@ class Calendar
 	 * @param string $pattern    pattern of the day output
 	 *   FALSE to do not include week number
 	 * @return self
+	 * @todo add method setIncludeWeekNumbers() instead of FALSE here
 	 */
 	public function setWeekPattern($pattern)
 	{
@@ -132,6 +135,7 @@ class Calendar
 	 * @param int $dayNumber    0 means Sunday
 	 * @param string $class
 	 * @return self
+	 * @todo asi by měl třídu dostat každý den, ne jen hlavička
 	 */
 	public function setDayOfWeekClass($dayNumber, $class)
 	{
@@ -157,6 +161,7 @@ class Calendar
 	/**
 	 * @param array $monthClasses    indexed by month numbers, 0 means January
 	 * @return self
+	 * @todo CSS třída by se víc hodila u table nuž u řádku month
 	 */
 	public function setMonthClasses(array $monthClasses)
 	{
@@ -219,6 +224,7 @@ class Calendar
 	/**
 	 * @param string $class
 	 * @return self
+	 * @todo u ostatních tříd který určujou CSS class taky nemám v názvu "Css"
 	 */
 	public function setTableCssClass($class)
 	{
@@ -350,10 +356,10 @@ class Calendar
 		$this->startsWithLastWeek = $month === 1;
 
 		if (count($this->daysBefore)) {
-			$date = new \DateTime("$year-" . ($month -1) . '-' . $this->daysBefore[0]);
+			$date = $this->createDate($this->daysBefore[0], $month -1, $year);
 			$this->firstWeekNo = $this->calculateWeekNumber($date);
 		} else {
-			$date = new \DateTime("$year-$month-1");
+			$date = $this->createDate(1, $month, $year);
 			$this->firstWeekNo = $this->calculateWeekNumber($date);
 		}
 
@@ -370,6 +376,13 @@ class Calendar
 		}
 
 		return $output;
+	}
+
+
+	protected function createDate($day, $month, $year)
+	{
+		$this->correctMonth($month, $year);
+		return new \DateTime("$year-$month-$day");
 	}
 
 
@@ -423,13 +436,17 @@ class Calendar
 
 	protected function calculateFirstMonthDay($month, $year)
 	{
-		$date = new \DateTime("$year-$month-1");
+		$date = $this->createDate(1, $month, $year);
 		return $date->format('w');
 	}
 
 
+	/**
+	 * @todo everything must be lazy
+	 */
 	protected function calculateMonthDaysCount($month, $year)
 	{
+		$this->correctMonth($month, $year);
 		return cal_days_in_month(CAL_GREGORIAN, $month, $year);
 	}
 
@@ -450,7 +467,7 @@ class Calendar
 		if (isset($this->extraDatePattern[$stamp])){
 			$pattern = $this->extraDatePattern[$stamp];
 		}
-		return $this->replaceDelegates($pattern, (int) $date->format('j'));
+		return $this->replaceDelegates($pattern, $date->format($this->zerofill ? 'd' : 'j'));
 	}
 
 
@@ -610,7 +627,7 @@ class Calendar
 
 		//  free position over week number
 		if ($this->weekPattern !== FALSE) {
-			$headings .= $indent(3) . '<td class="' . $this->weekNumberCellCssClass . '"></td>';
+			$headings .= $indent(3) . '<td class="' . $this->weekNumberCellCssClass . '">&nbsp;</td>';
 		}
 
 		// days
@@ -658,7 +675,7 @@ class Calendar
 			// days off month scope
 			if (!$daysBeforeDumped) {
 				foreach ($this->daysBefore as $dayBefore) {
-					$date = new \DateTime("$year-" . ($month -1) . "-$dayBefore");
+					$date = $this->createDate($dayBefore, $month -1, $year);
 					$classes = $this->getDateClasses($date);
 					$classes[] = $this->outsideDayCellCssClass;
 					$body .= $indent(3) . '<td class="' . implode(' ', $classes).'">'
@@ -673,7 +690,7 @@ class Calendar
 			// row
 			for ($columnNo = $startingDay; $columnNo < 7; $columnNo++) {
 				if ($day > $this->calculateMonthDaysCount($month, $year)) {
-					$date = new \DateTime("$year-" . ($month +1) . "-$daysAfter");
+					$date = $this->createDate($daysAfter, $month +1, $year);
 					$classes = $this->getDateClasses($date);
 					$classes[] = $this->outsideDayCellCssClass;
 					$body .= $indent(3) . '<td class="' . implode(' ', $classes).'">'
@@ -681,7 +698,7 @@ class Calendar
 					++$daysAfter;
 					continue;
 				}
-				$date = new \DateTime("$year-$month-$day");
+				$date = $this->createDate($day, $month, $year);
 				$classes = $this->getDateClasses($date);
 				$body .= $indent(3) . '<td';
 				if (count($classes)) {
