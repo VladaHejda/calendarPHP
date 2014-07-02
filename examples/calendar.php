@@ -14,6 +14,7 @@ h2 { margin-top: 8px; }
 .extra { font-weight: bold; color: #aa0086; }
 .italic { font-style: italic; }
 .funny, .funny td { background: yellow; border: 1px green dotted; }
+.myMonth { border: 2px #000 solid; }
 </style>
 </head>
 <body>
@@ -134,7 +135,7 @@ echo $calendar->setTableCssClass('funny')
 
 $calendar = new \Calendar;
 echo '<h2>Modified classnames</h2>';
-echo $calendar->setMonthClasses([5 => 'june'])
+echo $calendar->setMonthClasses([7 => 'myMonth'])
 	->setDayOfWeekClasses([0 => 'funny', 5 => 'funny'])
 	->render(8, 2011);
 

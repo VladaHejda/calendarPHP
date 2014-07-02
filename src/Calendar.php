@@ -161,7 +161,6 @@ class Calendar
 	 * @param int $dayNumber    0 means Sunday
 	 * @param string $class
 	 * @return self
-	 * @todo asi by měl třídu dostat každý den, ne jen hlavička
 	 */
 	public function setDayOfWeekClass($dayNumber, $class)
 	{
@@ -187,7 +186,6 @@ class Calendar
 	/**
 	 * @param array $monthClasses    indexed by month numbers, 0 means January
 	 * @return self
-	 * @todo CSS třída by se víc hodila u table nuž u řádku month
 	 */
 	public function setMonthClasses(array $monthClasses)
 	{
@@ -604,7 +602,11 @@ class Calendar
 	{
 		$indent = $this->indent;
 
-		$output = $indent(0) . '<table class="' . $this->tableCssClass .'">';
+		$classes = [$this->tableCssClass];
+		if (isset($this->monthClasses[$month -1])) {
+			$classes[] = $this->monthClasses[$month -1];
+		}
+		$output = $indent(0) . '<table class="' . implode(' ', $classes) .'">';
 		$tableHeadDumped = FALSE;
 
 		// month name
@@ -643,10 +645,6 @@ class Calendar
 		$indent = $this->indent;
 
 		$heading = $indent(2) . '<tr class="' . $this->monthNameRowCssClass;
-		// month CSS class
-		if (isset($this->monthClasses[$month -1])) {
-			$heading .= ' ' . $this->monthClasses[$month -1];
-		}
 		$heading .= '">';
 		$heading .= $indent(3) . '<td colspan="' . $this->columnCount . '">' . $this->monthHeadings[$month -1] . '</td>';
 
