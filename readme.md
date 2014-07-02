@@ -3,10 +3,10 @@ PHP Calendar
 
 Highly customizable calendar.
 
-Examples
---------
+Usage with examples
+-------------------
 
-Watch [examples](http://phpcalendar.hejdav.cz).
+Watch [usage and examples](http://phpcalendar.hejdav.cz) page.
 
 Download
 --------
