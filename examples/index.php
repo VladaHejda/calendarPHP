@@ -161,6 +161,20 @@ echo '<h2>Week number heading</h2>';
 echo $calendar->setWeekNumbersHeading('week')
 	->render(10, 2011);
 
+
+
+$calendar = new \Calendar;
+echo '<h2>No HTML indention (see source code)</h2>';
+echo $calendar->setWeekNumbersHeading('week')
+	->render(11, 2011, FALSE);
+
+
+
+$calendar = new \Calendar;
+echo '<h2>Indention offset, two spaces instaed of tabs (see source code)</h2>';
+echo $calendar->setWeekNumbersHeading('week')
+	->render(12, 2011, 5, '  ');
+
 ?>
 </body>
 </html>
