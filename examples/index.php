@@ -22,7 +22,7 @@ h2 { margin: 8px 0 0 5px; }
 <body>
 
 <h1>PHP Calendar usage and examples</h1>
-<p><a href="https://github.com/VladaHejda/calendarPHP">github.com/VladaHejda/calendarPHP</a></p>
+<p>Download here <a href="https://github.com/VladaHejda/calendarPHP#php-calendar">github.com/VladaHejda/calendarPHP</a></p>
 
 <?php
 
