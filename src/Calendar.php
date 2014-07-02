@@ -3,9 +3,8 @@
 /**
  * Calendar renderer
  * @author 2012-2014 jsem@hejdav.cz Vladislav Hejda
- * @todo která class dostane přednost - outside nebo special?
+ *
  * @todo days callbacks
- * @todo aggregate some vars
  *
  * In patterns use:
  *   %d = Arabic number
@@ -18,22 +17,16 @@ class Calendar
 	protected $startDay = 0;
 
 	/** @var bool */
-	protected $zerofillDays = FALSE;
-
-	/** @var bool */
-	protected $zerofillWeeks = FALSE;
+	protected $zerofillDays = FALSE,
+		$zerofillWeeks = FALSE;
 
 	/** @var string */
-	protected $dayPattern = '%d';
+	protected $dayPattern = '%d',
+		$weekPattern = '%d.',
+		$outsideDayPattern = NULL;
 
 	/** @var bool */
 	protected $includeWeekNumbers = TRUE;
-
-	/** @var string */
-	protected $weekPattern = '%d.';
-
-	/** @var bool */
-	protected $outsideDayPattern = NULL;
 
 	/** @var array */
 	protected $extraDatePattern = [];
@@ -48,16 +41,14 @@ class Calendar
 	protected $monthClasses = [];
 
 	/** @var bool */
-	protected $includeMonthHeadings = TRUE;
+	protected $includeMonthHeadings = TRUE,
+		$includeDayHeadings = TRUE;
 
 	/** @var array */
 	protected $monthHeadings = [
 		'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
 		'September', 'October', 'November', 'December'
 	];
-
-	/** @var bool */
-	protected $includeDayHeadings = TRUE;
 
 	/** @var array */
 	protected $dayHeadings = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
