@@ -28,6 +28,9 @@ class Calendar
 	/** @var bool */
 	protected $includeWeekNumbers = TRUE;
 
+	/** @var string */
+	protected $weekNumbersHeading = '&nbsp;';
+
 	/** @var array */
 	protected $extraDatePattern = [];
 
@@ -115,6 +118,17 @@ class Calendar
 	public function setIncludeWeekNumbers($value = TRUE)
 	{
 		$this->includeWeekNumbers = (bool) $value;
+		return $this;
+	}
+
+
+	/**
+	 * @param string $heading
+	 * @return self
+	 */
+	public function setWeekNumbersHeading($heading)
+	{
+		$this->weekNumbersHeading = (string) $heading;
 		return $this;
 	}
 
@@ -680,7 +694,7 @@ class Calendar
 
 		//  free position over week number
 		if ($this->includeWeekNumbers) {
-			$headings .= $indent(3) . '<td class="' . $this->weekNumberCellClass . '">&nbsp;</td>';
+			$headings .= $indent(3) . '<td class="' . $this->weekNumberCellClass . '">' . $this->weekNumbersHeading . '</td>';
 		}
 
 		// days

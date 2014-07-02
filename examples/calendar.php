@@ -155,6 +155,12 @@ echo $calendar->setAddExtraClassesToOutsideDays(FALSE)
 	->setApplyExtraPatternsToOutsideDays(FALSE)
 	->render(9, 2011);
 
+
+$calendar = new \Calendar;
+echo '<h2>Week number heading</h2>';
+echo $calendar->setWeekNumbersHeading('week')
+	->render(10, 2011);
+
 ?>
 </body>
 </html>
