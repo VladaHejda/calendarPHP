@@ -598,14 +598,14 @@ class Calendar
 
 	protected static function correctMonth(& $month, & $year)
 	{
-		// todo this can be done without cycle
-		while ($month < 1) {
-			$month = $month + 12;
+		if ($month > 12) {
+			$year += floor($month /12);
+			$month = $month %12;
+		} elseif ($month < 1) {
+			$month = abs($month);
 			--$year;
-		}
-		while ($month > 12) {
-			$month = $month - 12;
-			++$year;
+			$year -= floor($month /12);
+			$month = 12 - $month %12;
 		}
 	}
 
