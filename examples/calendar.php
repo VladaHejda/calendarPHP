@@ -118,7 +118,7 @@ $calendar = new \Calendar;
 echo '<h2>...and week number excluded</h2>';
 echo $calendar->setIncludeDayHeadings(FALSE)
 	->setIncludeMonthHeadings(FALSE)
-	->setWeekPattern(FALSE)
+	->setIncludeWeekNumbers(FALSE)
 	->render(6, 2011);
 
 

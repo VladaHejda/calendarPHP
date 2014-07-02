@@ -25,6 +25,9 @@ class Calendar
 	/** @var string */
 	protected $dayPattern = '%d';
 
+	/** @var bool */
+	protected $includeWeekNumbers = TRUE;
+
 	/** @var string */
 	protected $weekPattern = '%d.';
 
@@ -109,14 +112,23 @@ class Calendar
 
 
 	/**
-	 * @param string $pattern    pattern of the day output
-	 *   FALSE to do not include week number
+	 * @param bool $value
 	 * @return self
-	 * @todo add method setIncludeWeekNumbers() instead of FALSE here
+	 */
+	public function setIncludeWeekNumbers($value = TRUE)
+	{
+		$this->includeWeekNumbers = (bool) $value;
+		return $this;
+	}
+
+
+	/**
+	 * @param string $pattern    pattern of the day output
+	 * @return self
 	 */
 	public function setWeekPattern($pattern)
 	{
-		$this->weekPattern = $pattern === FALSE ? FALSE : (string) $pattern;
+		$this->weekPattern = (string) $pattern;
 		return $this;
 	}
 
@@ -359,7 +371,7 @@ class Calendar
 		self::correctMonth($month, $year);
 
 		$this->columnCount = 7;
-		if ($this->weekPattern !== FALSE){
+		if ($this->includeWeekNumbers){
 			++$this->columnCount;
 		}
 
@@ -649,7 +661,7 @@ class Calendar
 		$headings = $indent(2) . '<tr class="' . $this->dayNamesRowCssClass . '">';
 
 		//  free position over week number
-		if ($this->weekPattern !== FALSE) {
+		if ($this->includeWeekNumbers) {
 			$headings .= $indent(3) . '<td class="' . $this->weekNumberCellCssClass . '">&nbsp;</td>';
 		}
 
@@ -687,7 +699,7 @@ class Calendar
 			$body .= $indent(2) . '<tr>';
 
 			// week number
-			if ($this->weekPattern !== FALSE) {
+			if ($this->includeWeekNumbers) {
 				$weekString = $this->firstWeekNo++;
 				$weekString = $this->zerofillWeeks ? self::zerofill($weekString, 2) : $weekString;
 				$body .= $indent(3) . '<td class="' . $this->weekNumberCellCssClass . '">'
