@@ -104,7 +104,7 @@ echo $calendar->setZerofillWeeks()
 $calendar = new \Calendar;
 echo '<h2>Modified default headings</h2>';
 echo $calendar->setDayHeadings(['ne', 'po', 'út', 'st', 'čt', 'pá', 'so'])
-	->setMonthHeadings([3 => 'duben'])
+	->setMonthHeadings(['leden','unor','brezen','duben','kveten','cerven','cervenec','srpen','zari','rijen','listopad','prosinec'])
 	->render(4, 2011);
 
 
