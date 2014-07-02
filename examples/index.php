@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <style>
 * { margin: 0; padding: 0; font-family: Arial; }
-h1, p { margin: 5px; }
-code { background: #fff8d6; display: block; margin: 8px 5px; }
-table { border-spacing: 0; margin: 5px; border: #ffc571 1px solid; }
+h1, p { margin: 15px; }
+code { background: #fff8d6; display: block; margin: 20px 15px; }
+table { border-spacing: 0; margin: 15px; border: #ffc571 1px solid; }
 td { border: #e1e1e1 1px solid; padding: 1px 2px; background: #f7ffe4; }
-h2 { margin: 8px 0 0 5px; }
+h2 { margin: 20px 0 0 15px; }
 .month { color: #ff7b00; }
 .week { color: rgba(0, 47, 255, 0.56); }
 .daynames { color: #6dba54; }
