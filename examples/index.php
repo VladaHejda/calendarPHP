@@ -9,6 +9,7 @@ code { background: #fff8d6; display: block; margin: 20px 15px; }
 table { border-spacing: 0; margin: 15px; border: #ffc571 1px solid; }
 td { border: #e1e1e1 1px solid; padding: 1px 2px; background: #f7ffe4; }
 h2 { margin: 20px 0 0 15px; }
+h2 a[href] { color: #ccc; text-decoration: none; }
 .month { color: #ff7b00; }
 .week { color: rgba(0, 47, 255, 0.56); }
 .daynames { color: #6dba54; }
@@ -33,7 +34,7 @@ function show($code) {
 }
 
 
-echo '<h2>Common use</h2>';
+echo '<h2><a href="#common-use">#</a> <a name="common-use">Common use</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar->render(4, 2010);
@@ -42,7 +43,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Change day pattern (Roman numerals - %e)</h2>';
+echo '<h2><a href="#change-day-pattern">#</a> <a name="change-day-pattern">Change day pattern (Roman numerals - %e)</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -53,7 +54,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Change outside days pattern</h2>';
+echo '<h2><a href="#change-outside-days-pattern">#</a> <a name="change-outside-days-pattern">Change outside days pattern</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -64,7 +65,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Change week starting day (0 = Sunday)</h2>';
+echo '<h2><a href="#change-week-starting-day">#</a> <a name="change-week-starting-day">Change week starting day (0 = Sunday)</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -75,7 +76,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Change week pattern (Roman numerals)</h2>';
+echo '<h2><a href="#change-week-pattern">#</a> <a name="change-week-pattern">Change week pattern (Roman numerals)</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -86,7 +87,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Pad day numbers with leading zero</h2>';
+echo '<h2><a href="#pad-day-numbers-with-leading-zero">#</a> <a name="pad-day-numbers-with-leading-zero">Pad day numbers with leading zero</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -97,7 +98,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Add extra class for certain dates</h2>';
+echo '<h2><a href="#add-extra-class-for-certain-dates">#</a> <a name="add-extra-class-for-certain-dates">Add extra class for certain dates</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -109,7 +110,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Add extra class for certain period</h2>';
+echo '<h2><a href="#add-extra-class-for-certain-period">#</a> <a name="add-extra-class-for-certain-period">Add extra class for certain period</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 $period = new \DatePeriod(new \DateTime('2010-11-11'), new DateInterval('P1D'), 8);
@@ -120,7 +121,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Use extra pattern for certain date/period</h2>';
+echo '<h2><a href="#use-extra-pattern-for-certain-date-period">#</a> <a name="use-extra-pattern-for-certain-date-period">Use extra pattern for certain date/period</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 $period = new \DatePeriod(new \DateTime('2010-12-20'), new DateInterval('P2D'), 2);
@@ -133,7 +134,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Week of last year in new one</h2>';
+echo '<h2><a href="#week-of-last-year-in-new-one">#</a> <a name="week-of-last-year-in-new-one">Week of last year in new one</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar->render(1, 2011);
@@ -143,7 +144,7 @@ eval($code);
 
 
 
-echo '<h2>How extra classes overlaying</h2>';
+echo '<h2><a href="#how-extra-classes-overlaying">#</a> <a name="how-extra-classes-overlaying">How extra classes overlaying</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 $period1 = new \DatePeriod(new \DateTime('2011-02-10'), new DateInterval('P1D'), 4);
@@ -157,7 +158,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Pad week numbers with leading zero</h2>';
+echo '<h2><a href="#pad-week-numbers-with-leading-zero">#</a> <a name="pad-week-numbers-with-leading-zero">Pad week numbers with leading zero</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -168,7 +169,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Change day / month default headings</h2>';
+echo '<h2><a href="#change-day-month-default-headings">#</a> <a name="change-day-month-default-headings">Change day / month default headings</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -180,7 +181,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Exclude headings</h2>';
+echo '<h2><a href="#exclude-headings">#</a> <a name="exclude-headings">Exclude headings</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -192,7 +193,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Exclude week numbers</h2>';
+echo '<h2><a href="#exclude-week-numbers">#</a> <a name="exclude-week-numbers">Exclude week numbers</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -205,7 +206,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Change classnames of table structure</h2>';
+echo '<h2><a href="#change-classnames-of-table-structure">#</a> <a name="change-classnames-of-table-structure">Change classnames of table structure</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -220,7 +221,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Add table classname for certain month + add classname for certain day of week</h2>';
+echo '<h2><a href="#add-table-classname-for-certain-month-add-classname-for-certain-day-of-week">#</a> <a name="add-table-classname-for-certain-month-add-classname-for-certain-day-of-week">Add table classname for certain month + add classname for certain day of week</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -232,7 +233,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Use extra pattern / class outside month scope</h2>';
+echo '<h2><a href="#use-extra-pattern-class-outside-month-scope">#</a> <a name="use-extra-pattern-class-outside-month-scope">Use extra pattern / class outside month scope</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -247,7 +248,7 @@ show($code);
 eval($code);
 
 
-echo '<h2>Forbid using extra pattern / class outside month scope</h2>';
+echo '<h2><a href="#forbid-using-extra-pattern-class-outside-month-scope">#</a> <a name="forbid-using-extra-pattern-class-outside-month-scope">Forbid using extra pattern / class outside month scope</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -263,7 +264,7 @@ eval($code);
 
 
 $calendar = new \Calendar;
-echo '<h2>Add week number heading</h2>';
+echo '<h2><a href="#add-week-number-heading">#</a> <a name="add-week-number-heading">Add week number heading</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -276,7 +277,7 @@ eval($code);
 
 
 $calendar = new \Calendar;
-echo '<h2>Do not render HTML indention (see source code)</h2>';
+echo '<h2><a href="#do-not-render-html-indention">#</a> <a name="do-not-render-html-indention">Do not render HTML indention (see source code)</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -288,7 +289,7 @@ eval($code);
 
 
 $calendar = new \Calendar;
-echo '<h2>Add HTML indention offset, change indention string (see source code)</h2>';
+echo '<h2><a href="#add-html-indention-offset-change-indention-string">#</a> <a name="add-html-indention-offset-change-indention-string">Add HTML indention offset, change indention string (see source code)</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
