@@ -74,7 +74,8 @@ class Calendar
 		$applyExtraPatternsToOutsideDays = FALSE;
 
 
-	private $columnCount, $shift, $daysBefore, $weekCount, $firstWeekNo, $startsWithLastWeek, $indent;
+	private $monthDaysCount, $lastMonthDaysCount, $columnCount, $shift, $daysBefore, $weekCount, $firstWeekNo,
+		$startsWithLastWeek, $indent;
 
 
 	public function __construct()
@@ -394,6 +395,9 @@ class Calendar
 	{
 		self::correctMonth($month, $year);
 
+		$this->monthDaysCount = $this->calculateMonthDaysCount($month, $year);
+		$this->lastMonthDaysCount = $this->calculateMonthDaysCount($month -1, $year);
+
 		$this->columnCount = 7;
 		if ($this->includeWeekNumbers){
 			++$this->columnCount;
@@ -401,7 +405,7 @@ class Calendar
 
 		$this->shift = $this->calculateDaysShift();
 		$this->daysBefore = $this->calculateDaysBefore($month, $year);
-		$this->weekCount = $this->calculateWeekCount($month, $year, count($this->daysBefore));
+		$this->weekCount = $this->calculateWeekCount(count($this->daysBefore));
 		$this->startsWithLastWeek = $month === 1;
 
 		if (count($this->daysBefore)) {
@@ -464,15 +468,15 @@ class Calendar
 		}
 		$days = [];
 		for ($i = $daysCount -1; $i >= 0; $i--) {
-			$days[] = $this->calculateMonthDaysCount($month -1, $year) -$i;
+			$days[] = $this->lastMonthDaysCount -$i;
 		}
 		return $days;
 	}
 
 
-	protected function calculateWeekCount($month, $year, $daysBeforeCount)
+	protected function calculateWeekCount($daysBeforeCount)
 	{
-		return ceil(($this->calculateMonthDaysCount($month, $year) + $daysBeforeCount) / 7);
+		return ceil(($this->monthDaysCount + $daysBeforeCount) / 7);
 	}
 
 
@@ -489,9 +493,6 @@ class Calendar
 	}
 
 
-	/**
-	 * @todo everything must be lazy
-	 */
 	protected function calculateMonthDaysCount($month, $year)
 	{
 		$this->correctMonth($month, $year);
@@ -764,7 +765,7 @@ class Calendar
 			for ($columnNo = $startingDay; $columnNo < 7; $columnNo++) {
 
 				// days off month scope, right side
-				if ($day > $this->calculateMonthDaysCount($month, $year)) {
+				if ($day > $this->monthDaysCount) {
 					$date = $this->createDate($daysAfter, $month +1, $year);
 					if ($this->addExtraClassesToOutsideDays) {
 						$classes = $this->getDateClasses($date);
