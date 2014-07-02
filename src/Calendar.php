@@ -5,7 +5,7 @@
  * @author 2012-2014 jsem@hejdav.cz Vladislav Hejda
  * @todo která class dostane přednost - outside nebo special?
  * @todo days callbacks
- * @todo setAddExtraClassesToOutsideDays + setApplyExtraPatternsToOutsideDays
+ * @todo aggregate some vars
  *
  * In patterns use:
  *   %d = Arabic number
@@ -33,7 +33,7 @@ class Calendar
 	protected $weekPattern = '%d.';
 
 	/** @var bool */
-	protected $outsideDayPattern = FALSE;
+	protected $outsideDayPattern = NULL;
 
 	/** @var array */
 	protected $extraDatePattern = [];
@@ -68,6 +68,10 @@ class Calendar
 		$dayNamesRowCssClass = 'daynames',
 		$weekNumberCellCssClass = 'week',
 		$outsideDayCellCssClass = 'outday';
+
+	/** @var bool */
+	protected $addExtraClassesToOutsideDays = TRUE,
+		$applyExtraPatternsToOutsideDays = FALSE;
 
 
 	private $columnCount, $shift, $daysBefore, $weekCount, $firstWeekNo, $startsWithLastWeek, $indent;
@@ -136,12 +140,12 @@ class Calendar
 
 	/**
 	 * @param string $pattern    pattern for days that are off the month scope
-	 *   FALSE to use standard day pattern
+	 *   NULL to use standard day pattern
 	 * @return self
 	 */
 	public function setOutsideDayPattern($pattern)
 	{
-		$this->outsideDayPattern = $pattern === FALSE ? FALSE : (string) $pattern;
+		$this->outsideDayPattern = $pattern === NULL ? NULL : (string) $pattern;
 		return $this;
 	}
 
@@ -359,6 +363,28 @@ class Calendar
 
 
 	/**
+	 * @param bool $value
+	 * @return self
+	 */
+	public function setAddExtraClassesToOutsideDays($value = TRUE)
+	{
+		$this->addExtraClassesToOutsideDays = (bool) $value;
+		return $this;
+	}
+
+
+	/**
+	 * @param bool $value
+	 * @return self
+	 */
+	public function setApplyExtraPatternsToOutsideDays($value = TRUE)
+	{
+		$this->applyExtraPatternsToOutsideDays = (bool) $value;
+		return $this;
+	}
+
+
+	/**
 	 * @param int $month    1-12
 	 * @param int $year     e.g. 2015
 	 * @param int|FALSE $indentOffset
@@ -484,11 +510,13 @@ class Calendar
 	}
 
 
-	protected function applyPattern($pattern, \DateTime $date)
+	protected function applyPattern($pattern, \DateTime $date, $useExtra = TRUE)
 	{
-		$stamp = self::generateStamp($date);
-		if (isset($this->extraDatePattern[$stamp])){
-			$pattern = $this->extraDatePattern[$stamp];
+		if ($useExtra) {
+			$stamp = self::generateStamp($date);
+			if (isset($this->extraDatePattern[$stamp])) {
+				$pattern = $this->extraDatePattern[$stamp];
+			}
 		}
 		return $this->replaceDelegates($pattern, $date->format($this->zerofillDays ? 'd' : 'j'));
 	}
@@ -686,7 +714,7 @@ class Calendar
 		$daysBeforeDumped = FALSE;
 		$day = $daysAfter = 1;
 
-		if ($this->outsideDayPattern === FALSE) {
+		if ($this->outsideDayPattern === NULL) {
 			$outsideDayPattern = $this->dayPattern;
 		} else {
 			$outsideDayPattern = $this->outsideDayPattern;
@@ -709,17 +737,23 @@ class Calendar
 				}
 			}
 
-			// days off month scope
+			// days off month scope, left side
 			if (!$daysBeforeDumped) {
 				foreach ($this->daysBefore as $i => $dayBefore) {
+
 					$date = $this->createDate($dayBefore, $month -1, $year);
-					$classes = $this->getDateClasses($date);
+					if ($this->addExtraClassesToOutsideDays) {
+						$classes = $this->getDateClasses($date);
+					} else {
+						$classes = [];
+					}
+
 					$classes[] = $this->outsideDayCellCssClass;
 					if (isset($this->dayClasses[$this->shift[$i]])) {
 						$classes[] = $this->dayClasses[$this->shift[$i]];
 					}
 					$body .= $indent(3) . '<td class="' . implode(' ', $classes).'">'
-						. $this->applyPattern($outsideDayPattern, $date) . '</td>';
+						. $this->applyPattern($outsideDayPattern, $date, $this->applyExtraPatternsToOutsideDays) . '</td>';
 				}
 				$daysBeforeDumped = TRUE;
 				$startingDay = count($this->daysBefore);
@@ -729,18 +763,25 @@ class Calendar
 
 			// row
 			for ($columnNo = $startingDay; $columnNo < 7; $columnNo++) {
+
+				// days off month scope, right side
 				if ($day > $this->calculateMonthDaysCount($month, $year)) {
 					$date = $this->createDate($daysAfter, $month +1, $year);
-					$classes = $this->getDateClasses($date);
+					if ($this->addExtraClassesToOutsideDays) {
+						$classes = $this->getDateClasses($date);
+					} else {
+						$classes = [];
+					}
 					$classes[] = $this->outsideDayCellCssClass;
 					if (isset($this->dayClasses[$this->shift[$columnNo]])) {
 						$classes[] = $this->dayClasses[$this->shift[$columnNo]];
 					}
 					$body .= $indent(3) . '<td class="' . implode(' ', $classes).'">'
-						. $this->applyPattern($outsideDayPattern, $date) . '</td>';
+						. $this->applyPattern($outsideDayPattern, $date, $this->applyExtraPatternsToOutsideDays) . '</td>';
 					++$daysAfter;
 					continue;
 				}
+
 				$date = $this->createDate($day, $month, $year);
 				$classes = $this->getDateClasses($date);
 				if (isset($this->dayClasses[$this->shift[$columnNo]])) {

@@ -139,6 +139,22 @@ echo $calendar->setMonthClasses([7 => 'myMonth'])
 	->setDayOfWeekClasses([0 => 'funny', 5 => 'funny'])
 	->render(8, 2011);
 
+
+$calendar = new \Calendar;
+echo '<h2>Extra pattern/class outside month scope</h2>';
+echo $calendar->setExtraDateClass(new DateTime('2011-08-29'), 'funny')
+	->setExtraDateClass(new DateTime('2011-09-10'), 'funny')
+	->setExtraDatePattern(new DateTime('2011-10-01'), '<b>X</b>')
+	->setExtraDatePattern(new DateTime('2011-09-15'), '<b>X</b>')
+	->setApplyExtraPatternsToOutsideDays()
+	->render(9, 2011);
+
+
+echo '<h2>Extra pattern/class outside month scope prohibited</h2>';
+echo $calendar->setAddExtraClassesToOutsideDays(FALSE)
+	->setApplyExtraPatternsToOutsideDays(FALSE)
+	->render(9, 2011);
+
 ?>
 </body>
 </html>
