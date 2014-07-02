@@ -76,8 +76,8 @@ echo $calendar->setExtraPeriodClass($period, 'extra')
 $calendar = new \Calendar;
 echo '<h2>Certain date/period pattern</h2>';
 $period = new DatePeriod(new DateTime('2010-12-20'), new DateInterval('P2D'), 2);
-echo $calendar->setExtraDatePattern(new DateTime('2010-12-13'), '<b>X</b>')
-	->setExtraPeriodPattern($period, '<b>X</b>')
+echo $calendar->setExtraDatePattern(new DateTime('2010-12-13'), '<b>XXX</b>')
+	->setExtraPeriodPattern($period, '<b>XXX</b>')
 	->render(12, 2010);
 
 
@@ -134,7 +134,7 @@ echo $calendar->setTableClass('funny')
 
 
 $calendar = new \Calendar;
-echo '<h2>Modified classnames</h2>';
+echo '<h2>Modified table + day of week classnames</h2>';
 echo $calendar->setMonthClasses([7 => 'myMonth'])
 	->setDayOfWeekClasses([0 => 'funny', 5 => 'funny'])
 	->render(8, 2011);
@@ -144,8 +144,8 @@ $calendar = new \Calendar;
 echo '<h2>Extra pattern/class outside month scope</h2>';
 echo $calendar->setExtraDateClass(new DateTime('2011-08-29'), 'funny')
 	->setExtraDateClass(new DateTime('2011-09-10'), 'funny')
-	->setExtraDatePattern(new DateTime('2011-10-01'), '<b>X</b>')
-	->setExtraDatePattern(new DateTime('2011-09-15'), '<b>X</b>')
+	->setExtraDatePattern(new DateTime('2011-10-01'), '<b>XXX</b>')
+	->setExtraDatePattern(new DateTime('2011-09-15'), '<b>XXX</b>')
 	->setApplyExtraPatternsToOutsideDays()
 	->render(9, 2011);
 
