@@ -68,7 +68,7 @@ echo '<h2>Change week starting day (0 = Sunday)</h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
-	->setStartDay(1)
+	->setStartingDay(1)
 	->render(7, 2010);
 EOD;
 show($code);

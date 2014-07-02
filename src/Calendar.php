@@ -14,7 +14,7 @@ class Calendar
 {
 
 	/** @var int */
-	protected $startDay = 0;
+	protected $startingDay = 0;
 
 	/** @var bool */
 	protected $zerofillDays = FALSE,
@@ -160,9 +160,9 @@ class Calendar
 	 * @param int $dayNumber    first day of week, 0 means Sunday, 6 Saturday
 	 * @return self
 	 */
-	public function setStartDay($dayNumber)
+	public function setStartingDay($dayNumber)
 	{
-		$this->startDay = self::validateDayNumber($dayNumber);
+		$this->startingDay = self::validateDayNumber($dayNumber);
 		return $this;
 	}
 
@@ -446,10 +446,10 @@ class Calendar
 	protected function calculateDaysShift()
 	{
 		// start day shift
-		if ($this->startDay > 0) {
+		if ($this->startingDay > 0) {
 			$shift = [];
 			for ($i = 0; $i < 7; $i++) {
-				$dayShift = $this->startDay + $i;
+				$dayShift = $this->startingDay + $i;
 				if ($dayShift > 6){
 					$dayShift = $dayShift -7;
 				}
@@ -467,7 +467,7 @@ class Calendar
 	 */
 	protected function calculateDaysBefore($month, $year)
 	{
-		$daysCount = $this->calculateFirstMonthDay($month, $year) - $this->startDay;
+		$daysCount = $this->calculateFirstMonthDay($month, $year) - $this->startingDay;
 		if ($daysCount < 0) {
 			$daysCount += 7;
 		}
