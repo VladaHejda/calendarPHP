@@ -63,11 +63,11 @@ class Calendar
 	protected $dayHeadings = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
 
 	/** @var string */
-	protected $tableCssClass = 'calendar',
-		$monthNameRowCssClass = 'month',
-		$dayNamesRowCssClass = 'daynames',
-		$weekNumberCellCssClass = 'week',
-		$outsideDayCellCssClass = 'outday';
+	protected $tableClass = 'calendar',
+		$monthNameRowClass = 'month',
+		$dayNamesRowClass = 'daynames',
+		$weekNumberCellClass = 'week',
+		$outsideDayCellClass = 'outday';
 
 	/** @var bool */
 	protected $addExtraClassesToOutsideDays = TRUE,
@@ -252,11 +252,10 @@ class Calendar
 	/**
 	 * @param string $class
 	 * @return self
-	 * @todo u ostatních tříd který určujou CSS class taky nemám v názvu "Css"
 	 */
-	public function setTableCssClass($class)
+	public function setTableClass($class)
 	{
-		$this->tableCssClass = (string) $class;
+		$this->tableClass = (string) $class;
 		return $this;
 	}
 
@@ -265,9 +264,9 @@ class Calendar
 	 * @param string $class
 	 * @return self
 	 */
-	public function setMonthNameRowCssClass($class)
+	public function setMonthNameRowClass($class)
 	{
-		$this->monthNameRowCssClass = (string) $class;
+		$this->monthNameRowClass = (string) $class;
 		return $this;
 	}
 
@@ -276,9 +275,9 @@ class Calendar
 	 * @param string $class
 	 * @return self
 	 */
-	public function setDayNamesRowCssClass($class)
+	public function setDayNamesRowClass($class)
 	{
-		$this->dayNamesRowCssClass = (string) $class;
+		$this->dayNamesRowClass = (string) $class;
 		return $this;
 	}
 
@@ -287,9 +286,9 @@ class Calendar
 	 * @param string $class
 	 * @return self
 	 */
-	public function setWeekNumberCellCssClass($class)
+	public function setWeekNumberCellClass($class)
 	{
-		$this->weekNumberCellCssClass = (string) $class;
+		$this->weekNumberCellClass = (string) $class;
 		return $this;
 	}
 
@@ -298,9 +297,9 @@ class Calendar
 	 * @param string $class
 	 * @return self
 	 */
-	public function setOutsideDayCellCssClass($class)
+	public function setOutsideDayCellClass($class)
 	{
-		$this->outsideDayCellCssClass = (string) $class;
+		$this->outsideDayCellClass = (string) $class;
 		return $this;
 	}
 
@@ -630,7 +629,7 @@ class Calendar
 	{
 		$indent = $this->indent;
 
-		$classes = [$this->tableCssClass];
+		$classes = [$this->tableClass];
 		if (isset($this->monthClasses[$month -1])) {
 			$classes[] = $this->monthClasses[$month -1];
 		}
@@ -672,7 +671,7 @@ class Calendar
 	{
 		$indent = $this->indent;
 
-		$heading = $indent(2) . '<tr class="' . $this->monthNameRowCssClass;
+		$heading = $indent(2) . '<tr class="' . $this->monthNameRowClass;
 		$heading .= '">';
 		$heading .= $indent(3) . '<td colspan="' . $this->columnCount . '">' . $this->monthHeadings[$month -1] . '</td>';
 
@@ -685,17 +684,17 @@ class Calendar
 	{
 		$indent = $this->indent;
 
-		$headings = $indent(2) . '<tr class="' . $this->dayNamesRowCssClass . '">';
+		$headings = $indent(2) . '<tr class="' . $this->dayNamesRowClass . '">';
 
 		//  free position over week number
 		if ($this->includeWeekNumbers) {
-			$headings .= $indent(3) . '<td class="' . $this->weekNumberCellCssClass . '">&nbsp;</td>';
+			$headings .= $indent(3) . '<td class="' . $this->weekNumberCellClass . '">&nbsp;</td>';
 		}
 
 		// days
 		for ($i = 0; $i < 7; $i++) {
 			$headings .= $indent(3) . '<td';
-			// day of week CSS class
+			// day of week  class
 			if (isset($this->dayClasses[$this->shift[$i]])) {
 				$headings .= ' class="' . $this->dayClasses[$this->shift[$i]] . '"';
 			}
@@ -729,7 +728,7 @@ class Calendar
 			if ($this->includeWeekNumbers) {
 				$weekString = $this->firstWeekNo++;
 				$weekString = $this->zerofillWeeks ? self::zerofill($weekString, 2) : $weekString;
-				$body .= $indent(3) . '<td class="' . $this->weekNumberCellCssClass . '">'
+				$body .= $indent(3) . '<td class="' . $this->weekNumberCellClass . '">'
 					. $this->replaceDelegates($this->weekPattern, $weekString) . '</td>';
 				if ($this->startsWithLastWeek) {
 					$this->firstWeekNo = 1;
@@ -748,7 +747,7 @@ class Calendar
 						$classes = [];
 					}
 
-					$classes[] = $this->outsideDayCellCssClass;
+					$classes[] = $this->outsideDayCellClass;
 					if (isset($this->dayClasses[$this->shift[$i]])) {
 						$classes[] = $this->dayClasses[$this->shift[$i]];
 					}
@@ -772,7 +771,7 @@ class Calendar
 					} else {
 						$classes = [];
 					}
-					$classes[] = $this->outsideDayCellCssClass;
+					$classes[] = $this->outsideDayCellClass;
 					if (isset($this->dayClasses[$this->shift[$columnNo]])) {
 						$classes[] = $this->dayClasses[$this->shift[$columnNo]];
 					}

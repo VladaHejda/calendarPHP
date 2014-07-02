@@ -125,11 +125,11 @@ echo $calendar->setIncludeDayHeadings(FALSE)
 
 $calendar = new \Calendar;
 echo '<h2>Modified classnames</h2>';
-echo $calendar->setTableCssClass('funny')
-	->setMonthNameRowCssClass('funny')
-	->setWeekNumberCellCssClass('funny')
-	->setDayNamesRowCssClass('funny')
-	->setOutsideDayCellCssClass('funny')
+echo $calendar->setTableClass('funny')
+	->setMonthNameRowClass('funny')
+	->setWeekNumberCellClass('funny')
+	->setDayNamesRowClass('funny')
+	->setOutsideDayCellClass('funny')
 	->render(7, 2011);
 
 
