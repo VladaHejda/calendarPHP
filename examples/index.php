@@ -25,6 +25,8 @@ h2 a[href] { color: #ccc; text-decoration: none; }
 <h1>PHP Calendar usage and examples</h1>
 <p>Download here <a href="https://github.com/VladaHejda/calendarPHP#php-calendar">github.com/VladaHejda/calendarPHP</a></p>
 
+<p>In all patterns use <strong>%d</strong> for Arabic numeral, <strong>%e</strong> for Roman numeral.</p>
+
 <?php
 
 require __DIR__ . '/../src/Calendar.php';
