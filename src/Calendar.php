@@ -5,7 +5,6 @@
  * @author 2012-2014 jsem@hejdav.cz Vladislav Hejda
  * @todo která class dostane přednost - outside nebo special?
  * @todo days callbacks
- * @todo chyba viz nula v číslu týdnu u "Extra classes overlay"
  *
  * In patterns use:
  *   %d = Arabic number
@@ -357,11 +356,10 @@ class Calendar
 
 		if (count($this->daysBefore)) {
 			$date = $this->createDate($this->daysBefore[0], $month -1, $year);
-			$this->firstWeekNo = $this->calculateWeekNumber($date);
 		} else {
 			$date = $this->createDate(1, $month, $year);
-			$this->firstWeekNo = $this->calculateWeekNumber($date);
 		}
+		$this->firstWeekNo = $this->calculateWeekNumber($date);
 
 		$this->indent = function ($level) use ($indentOffset, $indentString) {
 			if ($indentOffset === FALSE) {
@@ -430,7 +428,7 @@ class Calendar
 
 	protected function calculateWeekNumber(\DateTime $date)
 	{
-		return $date->format('W');
+		return (int) $date->format('W');
 	}
 
 
