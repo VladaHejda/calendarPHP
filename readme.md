@@ -11,7 +11,7 @@ Watch [examples](http://phpcalendar.hejdav.cz).
 Download
 --------
 
-[Calendar.php](https://raw.githubusercontent.com/VladaHejda/calendarPHP/master/src/Calendar.php) and use it.
+- [Calendar.php](https://raw.githubusercontent.com/VladaHejda/calendarPHP/master/src/Calendar.php)
 
 *(right click, save target as..)*
 
