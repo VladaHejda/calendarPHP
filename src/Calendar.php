@@ -17,7 +17,10 @@ class Calendar
 	protected $startDay = 0;
 
 	/** @var bool */
-	protected $zerofill = FALSE;
+	protected $zerofillDays = FALSE;
+
+	/** @var bool */
+	protected $zerofillWeeks = FALSE;
 
 	/** @var string */
 	protected $dayPattern = '%d';
@@ -76,9 +79,20 @@ class Calendar
 	 * @param bool $value    whether pad day numbers with leading zero
 	 * @return self
 	 */
-	public function setZerofill($value = TRUE)
+	public function setZerofillDays($value = TRUE)
 	{
-		$this->zerofill = (bool) $value;
+		$this->zerofillDays = (bool) $value;
+		return $this;
+	}
+
+
+	/**
+	 * @param bool $value    whether pad week numbers with leading zero
+	 * @return self
+	 */
+	public function setZerofillWeeks($value = TRUE)
+	{
+		$this->zerofillWeeks = (bool) $value;
 		return $this;
 	}
 
@@ -465,7 +479,7 @@ class Calendar
 		if (isset($this->extraDatePattern[$stamp])){
 			$pattern = $this->extraDatePattern[$stamp];
 		}
-		return $this->replaceDelegates($pattern, $date->format($this->zerofill ? 'd' : 'j'));
+		return $this->replaceDelegates($pattern, $date->format($this->zerofillDays ? 'd' : 'j'));
 	}
 
 
@@ -554,6 +568,17 @@ class Calendar
 			$month = $month - 12;
 			++$year;
 		}
+	}
+
+
+	protected static function zerofill($number, $digitsCount)
+	{
+		$length = strlen($number);
+		$pad = '';
+		if ($length < $digitsCount) {
+			$pad = str_repeat('0', $digitsCount - $length);
+		}
+		return $pad . $number;
 	}
 
 
@@ -663,7 +688,10 @@ class Calendar
 
 			// week number
 			if ($this->weekPattern !== FALSE) {
-				$body .= $indent(3) . '<td class="' . $this->weekNumberCellCssClass . '">' . $this->replaceDelegates($this->weekPattern, $this->firstWeekNo++) . '</td>';
+				$weekString = $this->firstWeekNo++;
+				$weekString = $this->zerofillWeeks ? self::zerofill($weekString, 2) : $weekString;
+				$body .= $indent(3) . '<td class="' . $this->weekNumberCellCssClass . '">'
+					. $this->replaceDelegates($this->weekPattern, $weekString) . '</td>';
 				if ($this->startsWithLastWeek) {
 					$this->firstWeekNo = 1;
 					$this->startsWithLastWeek = FALSE;

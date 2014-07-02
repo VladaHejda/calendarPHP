@@ -53,8 +53,8 @@ echo $calendar->setWeekPattern('%e.')
 
 
 $calendar = new \Calendar;
-echo '<h2>Zero padded numbers</h2>';
-echo $calendar->setZerofill()
+echo '<h2>Zero padded day numbers</h2>';
+echo $calendar->setZerofillDays()
 	->render(9, 2010);
 
 
@@ -95,17 +95,23 @@ echo $calendar->setExtraPeriodClass($period1, 'extra')
 
 
 $calendar = new \Calendar;
+echo '<h2>Zero padded week numbers</h2>';
+echo $calendar->setZerofillWeeks()
+	->render(3, 2011);
+
+
+$calendar = new \Calendar;
 echo '<h2>Modified default headings</h2>';
 echo $calendar->setDayHeadings(['ne', 'po', 'út', 'st', 'čt', 'pá', 'so'])
-	->setMonthHeadings([2 => 'březen'])
-	->render(3, 2011);
+	->setMonthHeadings([3 => 'duben'])
+	->render(4, 2011);
 
 
 $calendar = new \Calendar;
 echo '<h2>Headings excluded</h2>';
 echo $calendar->setIncludeDayHeadings(FALSE)
 	->setIncludeMonthHeadings(FALSE)
-	->render(4, 2011);
+	->render(5, 2011);
 
 
 $calendar = new \Calendar;
@@ -113,7 +119,7 @@ echo '<h2>...and week number excluded</h2>';
 echo $calendar->setIncludeDayHeadings(FALSE)
 	->setIncludeMonthHeadings(FALSE)
 	->setWeekPattern(FALSE)
-	->render(4, 2011);
+	->render(6, 2011);
 
 
 $calendar = new \Calendar;
@@ -123,14 +129,14 @@ echo $calendar->setTableCssClass('funny')
 	->setWeekNumberCellCssClass('funny')
 	->setDayNamesRowCssClass('funny')
 	->setOutsideDayCellCssClass('funny')
-	->render(5, 2011);
+	->render(7, 2011);
 
 
 $calendar = new \Calendar;
 echo '<h2>Modified classnames</h2>';
 echo $calendar->setMonthClasses([5 => 'june'])
 	->setDayOfWeekClass(5, 'funny')
-	->render(6, 2011);
+	->render(8, 2011);
 
 ?>
 </body>
