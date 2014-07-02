@@ -5,6 +5,7 @@
  * @author 2012-2014 jsem@hejdav.cz Vladislav Hejda
  * @todo která class dostane přednost - outside nebo special?
  * @todo days callbacks
+ * @todo setAddExtraClassesToOutsideDays + setApplyExtraPatternsToOutsideDays
  *
  * In patterns use:
  *   %d = Arabic number
@@ -712,10 +713,13 @@ class Calendar
 
 			// days off month scope
 			if (!$daysBeforeDumped) {
-				foreach ($this->daysBefore as $dayBefore) {
+				foreach ($this->daysBefore as $i => $dayBefore) {
 					$date = $this->createDate($dayBefore, $month -1, $year);
 					$classes = $this->getDateClasses($date);
 					$classes[] = $this->outsideDayCellCssClass;
+					if (isset($this->dayClasses[$this->shift[$i]])) {
+						$classes[] = $this->dayClasses[$this->shift[$i]];
+					}
 					$body .= $indent(3) . '<td class="' . implode(' ', $classes).'">'
 						. $this->applyPattern($outsideDayPattern, $date) . '</td>';
 				}
@@ -731,6 +735,9 @@ class Calendar
 					$date = $this->createDate($daysAfter, $month +1, $year);
 					$classes = $this->getDateClasses($date);
 					$classes[] = $this->outsideDayCellCssClass;
+					if (isset($this->dayClasses[$this->shift[$columnNo]])) {
+						$classes[] = $this->dayClasses[$this->shift[$columnNo]];
+					}
 					$body .= $indent(3) . '<td class="' . implode(' ', $classes).'">'
 						. $this->applyPattern($outsideDayPattern, $date) . '</td>';
 					++$daysAfter;
@@ -738,6 +745,9 @@ class Calendar
 				}
 				$date = $this->createDate($day, $month, $year);
 				$classes = $this->getDateClasses($date);
+				if (isset($this->dayClasses[$this->shift[$columnNo]])) {
+					$classes[] = $this->dayClasses[$this->shift[$columnNo]];
+				}
 				$body .= $indent(3) . '<td';
 				if (count($classes)) {
 					$body .= ' class="' . implode(' ', $classes) . '"';

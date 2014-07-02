@@ -135,7 +135,7 @@ echo $calendar->setTableCssClass('funny')
 $calendar = new \Calendar;
 echo '<h2>Modified classnames</h2>';
 echo $calendar->setMonthClasses([5 => 'june'])
-	->setDayOfWeekClass(5, 'funny')
+	->setDayOfWeekClasses([0 => 'funny', 5 => 'funny'])
 	->render(8, 2011);
 
 ?>
