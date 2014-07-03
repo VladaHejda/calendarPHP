@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <style>
-* { margin: 0; padding: 0; font-family: Arial; }
+* { margin: 0; padding: 0; }
+body { font-family: Arial; }
 h1, p { margin: 15px; }
-code { background: #fff8d6; display: block; margin: 20px 15px; }
+code { background: #fff8d6; display: block; margin: 20px 15px; font-family: "Courier New"; }
 table { border-spacing: 0; margin: 15px; border: #ffc571 1px solid; }
 td { border: #e1e1e1 1px solid; padding: 1px 2px; background: #f7ffe4; }
 h2 { margin: 20px 0 0 15px; }
