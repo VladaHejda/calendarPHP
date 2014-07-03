@@ -69,11 +69,11 @@ show($code);
 eval($code);
 
 
-echo '<h2><a href="#change-week-starting-day">#</a> <a name="change-week-starting-day">Change week starting day (0 = Sunday)</a></h2>';
+echo '<h2><a href="#change-week-starting-day">#</a> <a name="change-week-starting-day">Change week starting day</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
-	->setStartingDay(1)
+	->setStartingDay(\Calendar::MONDAY)
 	->render(7, 2010);
 EOD;
 show($code);
@@ -225,7 +225,7 @@ show($code);
 eval($code);
 
 
-echo '<h2><a href="#add-table-classname-for-certain-month-add-classname-for-certain-day-of-week">#</a> <a name="add-table-classname-for-certain-month-add-classname-for-certain-day-of-week">Add table classname for certain month + add classname for certain day of week</a></h2>';
+echo '<h2><a href="#add-table-classname-for-certain-month-add-classname-for-certain-day-of-week">#</a> <a name="add-table-classname-for-certain-month-add-classname-for-certain-day-of-week">Add table classname for certain month + add classname for certain day of week (0 = Sunday)</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar

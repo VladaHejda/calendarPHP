@@ -5,6 +5,8 @@
  * @author 2012-2014 jsem@hejdav.cz Vladislav Hejda
  *
  * @todo days callbacks
+ * @todo if class set to FALSE, do not render any class
+ * @todo year delegate %y
  *
  * In patterns use:
  *   %d = Arabic number
@@ -13,8 +15,16 @@
 class Calendar
 {
 
+	const SUNDAY = 0,
+		MONDAY = 1,
+		TUESDAY = 2,
+		WEDNESDAY = 3,
+		THURSDAY = 4,
+		FRIDAY = 5,
+		SATURDAY = 6;
+
 	/** @var int */
-	protected $startingDay = 0;
+	protected $startingDay = self::SUNDAY;
 
 	/** @var bool */
 	protected $zerofillDays = FALSE,
@@ -560,7 +570,7 @@ class Calendar
 	{
 		$dayNumber = (int) $dayNumber;
 		if ($dayNumber < 0 || $dayNumber > 6) {
-			throw new InvalidArgumentException("Day number must be an integer between 0 and 6. $dayNumber is not.");
+			throw new InvalidArgumentException("Day number must be an integer between 0 (Sun) and 6 (Sat). $dayNumber is not.");
 		}
 		return $dayNumber;
 	}
@@ -575,7 +585,7 @@ class Calendar
 	{
 		$monthNumber = (int) $monthNumber;
 		if ($monthNumber < 0 || $monthNumber > 11) {
-			throw new InvalidArgumentException("Month number must be an integer between 0 and 11. $monthNumber is not.");
+			throw new InvalidArgumentException("Month index must be an integer between 0 (Jan) and 11 (Dec). $monthNumber is not.");
 		}
 		return $monthNumber;
 	}
