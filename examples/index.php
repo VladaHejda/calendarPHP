@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>PHP Calendar</title>
 <style>
 * { margin: 0; padding: 0; }
 body { font-family: Arial; }
