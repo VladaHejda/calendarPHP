@@ -445,6 +445,7 @@ class Calendar
 			$output .= "\n";
 		}
 
+		$this->clean();
 		return $output;
 	}
 
@@ -815,6 +816,14 @@ class Calendar
 		}
 
 		return $body;
+	}
+
+
+	private function clean()
+	{
+		$this->month = $this->year = $this->monthDaysCount = $this->lastMonthDaysCount = $this->columnCount
+			= $this->shift = $this->daysBefore = $weekCount = $this->firstWeekNo = $this->startsWithLastWeek
+			= NULL;
 	}
 
 }
