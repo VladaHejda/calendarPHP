@@ -8,11 +8,17 @@
  * @todo if class set to FALSE, do not render any class
  * @todo year delegate %y
  *
- * In patterns use:
+ * In day/week pattern use:
  *   %d = Arabic number
  *   %e = Roman number
- *   %m = Month number
- *   %y = Year number
+ *   %m = month number
+ *   %y = year number
+ *
+ * In moth pattern use:
+ *   %s = month name
+ *   %d = month number
+ *   %e = month number in Roman numeral
+ *   %y = year number
  */
 class Calendar
 {
@@ -51,6 +57,9 @@ class Calendar
 
 	/** @var array */
 	protected $dayClasses = [0 => 'sunday'];
+
+	/** @var string */
+	protected $monthPattern = '%s';
 
 	/** @var array */
 	protected $monthClasses = [];
@@ -201,6 +210,17 @@ class Calendar
 		foreach ($dayClasses as $dayNumber => $class) {
 			$this->setDayOfWeekClass($dayNumber, $class);
 		}
+		return $this;
+	}
+
+
+	/**
+	 * @param string $pattern
+	 * @return self
+	 */
+	public function setMonthPattern($pattern)
+	{
+		$this->monthPattern = (string) $pattern;
 		return $this;
 	}
 
@@ -693,7 +713,21 @@ class Calendar
 
 		$heading = $indent(2) . '<tr class="' . $this->monthNameRowClass;
 		$heading .= '">';
-		$heading .= $indent(3) . '<td colspan="' . $this->columnCount . '">' . $this->monthHeadings[$this->month -1] . '</td>';
+
+		$search = ['%s', '%d', '%y'];
+		$replace = [
+			$this->monthHeadings[$this->month -1],
+			$this->month,
+			$this->year
+		];
+
+		if (strpos($this->monthPattern, '%e') !== FALSE) {
+			$search[] = '%e';
+			$replace[] = self::intToRoman($this->month);
+		}
+
+		$text = str_replace($search, $replace, $this->monthPattern);
+		$heading .= $indent(3) . '<td colspan="' . $this->columnCount . '">' . $text . '</td>';
 
 		$heading .= $indent(2) . '</tr>';
 		return $heading;

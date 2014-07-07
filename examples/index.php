@@ -315,6 +315,19 @@ EOD;
 show($code);
 eval($code);
 
+
+
+$calendar = new \Calendar;
+echo '<h2><a href="#change-month-heading-pattern">#</a> <a name="change-month-heading-pattern">Change month heading pattern</a></h2>';
+$code = <<<'EOD'
+$calendar = new \Calendar;
+echo $calendar
+	->setMonthPattern('%e. %s (%y)')
+	->render(2, 2012);
+EOD;
+show($code);
+eval($code);
+
 ?>
 </body>
 </html>
