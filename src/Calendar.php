@@ -78,8 +78,8 @@ class Calendar
 		$applyExtraPatternsToOutsideDays = FALSE;
 
 
-	private $monthDaysCount, $lastMonthDaysCount, $columnCount, $shift, $daysBefore, $weekCount, $firstWeekNo,
-		$startsWithLastWeek, $indent;
+	private $month, $year, $monthDaysCount, $lastMonthDaysCount, $columnCount, $shift, $daysBefore, $weekCount,
+		$firstWeekNo, $startsWithLastWeek, $indent;
 
 
 	public function __construct()
@@ -410,6 +410,9 @@ class Calendar
 	{
 		self::correctMonth($month, $year);
 
+		$this->month = $month;
+		$this->year = $year;
+
 		$this->monthDaysCount = $this->calculateMonthDaysCount($month, $year);
 		$this->lastMonthDaysCount = $this->calculateMonthDaysCount($month -1, $year);
 
@@ -419,7 +422,7 @@ class Calendar
 		}
 
 		$this->shift = $this->calculateDaysShift();
-		$this->daysBefore = $this->calculateDaysBefore($month, $year);
+		$this->daysBefore = $this->calculateDaysBefore();
 		$this->weekCount = $this->calculateWeekCount(count($this->daysBefore));
 		$this->startsWithLastWeek = $month === 1;
 
@@ -437,7 +440,7 @@ class Calendar
 			return "\n" . str_repeat($indentString, $level + $indentOffset);
 		};
 
-		$output = $this->build($month, $year);
+		$output = $this->build();
 		if ($indentOffset !== FALSE) {
 			$output .= "\n";
 		}
@@ -475,9 +478,9 @@ class Calendar
 	/**
 	 * Days outside month scope, left side.
 	 */
-	protected function calculateDaysBefore($month, $year)
+	protected function calculateDaysBefore()
 	{
-		$daysCount = $this->calculateFirstMonthDay($month, $year) - $this->startingDay;
+		$daysCount = $this->calculateFirstMonthDay() - $this->startingDay;
 		if ($daysCount < 0) {
 			$daysCount += 7;
 		}
@@ -501,9 +504,9 @@ class Calendar
 	}
 
 
-	protected function calculateFirstMonthDay($month, $year)
+	protected function calculateFirstMonthDay()
 	{
-		$date = $this->createDate(1, $month, $year);
+		$date = $this->createDate(1, $this->month, $this->year);
 		return $date->format('w');
 	}
 
@@ -637,17 +640,15 @@ class Calendar
 
 
 	/**
-	 * @param int $month
-	 * @param int $year
 	 * @return string
 	 */
-	private function build($month, $year)
+	private function build()
 	{
 		$indent = $this->indent;
 
 		$classes = [$this->tableClass];
-		if (isset($this->monthClasses[$month -1])) {
-			$classes[] = $this->monthClasses[$month -1];
+		if (isset($this->monthClasses[$this->month -1])) {
+			$classes[] = $this->monthClasses[$this->month -1];
 		}
 		$output = $indent(0) . '<table class="' . implode(' ', $classes) .'">';
 		$tableHeadDumped = FALSE;
@@ -658,7 +659,7 @@ class Calendar
 				$output .= $indent(1) . '<thead>';
 				$tableHeadDumped = TRUE;
 			}
-			$output .= $this->buildMonthHeading($month);
+			$output .= $this->buildMonthHeading();
 		}
 
 		// day names
@@ -667,7 +668,7 @@ class Calendar
 				$output .= $indent(1) . '<thead>';
 				$tableHeadDumped = TRUE;
 			}
-			$output .= $this->buildDayHeadings($month);
+			$output .= $this->buildDayHeadings();
 		}
 
 		if ($tableHeadDumped) {
@@ -675,7 +676,7 @@ class Calendar
 		}
 
 		$output .= $indent(1) . '<tbody>';
-		$output .= $this->buildBody($month, $year);
+		$output .= $this->buildBody();
 		$output .= $indent(1) . '</tbody>';
 		$output .= $indent(0) . '</table>';
 
@@ -683,13 +684,13 @@ class Calendar
 	}
 
 
-	private function buildMonthHeading($month)
+	private function buildMonthHeading()
 	{
 		$indent = $this->indent;
 
 		$heading = $indent(2) . '<tr class="' . $this->monthNameRowClass;
 		$heading .= '">';
-		$heading .= $indent(3) . '<td colspan="' . $this->columnCount . '">' . $this->monthHeadings[$month -1] . '</td>';
+		$heading .= $indent(3) . '<td colspan="' . $this->columnCount . '">' . $this->monthHeadings[$this->month -1] . '</td>';
 
 		$heading .= $indent(2) . '</tr>';
 		return $heading;
@@ -722,7 +723,7 @@ class Calendar
 	}
 
 
-	private function buildBody($month, $year)
+	private function buildBody()
 	{
 		$indent = $this->indent;
 
@@ -756,7 +757,7 @@ class Calendar
 			if (!$daysBeforeDumped) {
 				foreach ($this->daysBefore as $i => $dayBefore) {
 
-					$date = $this->createDate($dayBefore, $month -1, $year);
+					$date = $this->createDate($dayBefore, $this->month -1, $this->year);
 					if ($this->addExtraClassesToOutsideDays) {
 						$classes = $this->getDateClasses($date);
 					} else {
@@ -781,7 +782,7 @@ class Calendar
 
 				// days off month scope, right side
 				if ($day > $this->monthDaysCount) {
-					$date = $this->createDate($daysAfter, $month +1, $year);
+					$date = $this->createDate($daysAfter, $this->month +1, $this->year);
 					if ($this->addExtraClassesToOutsideDays) {
 						$classes = $this->getDateClasses($date);
 					} else {
@@ -797,7 +798,7 @@ class Calendar
 					continue;
 				}
 
-				$date = $this->createDate($day, $month, $year);
+				$date = $this->createDate($day, $this->month, $this->year);
 				$classes = $this->getDateClasses($date);
 				if (isset($this->dayClasses[$this->shift[$columnNo]])) {
 					$classes[] = $this->dayClasses[$this->shift[$columnNo]];
