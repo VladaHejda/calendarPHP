@@ -11,6 +11,8 @@
  * In patterns use:
  *   %d = Arabic number
  *   %e = Roman number
+ *   %m = Month number
+ *   %y = Year number
  */
 class Calendar
 {
@@ -543,8 +545,8 @@ class Calendar
 
 	protected function replaceDelegates($pattern, $number)
 	{
-		$search = ['%d'];
-		$replace = [$number];
+		$search = ['%d', '%m', '%y'];
+		$replace = [$number, $this->month, $this->year];
 
 		if (strpos($pattern, '%e') !== FALSE) {
 			$search[] = '%e';

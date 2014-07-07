@@ -302,6 +302,19 @@ EOD;
 show($code);
 eval($code);
 
+
+
+$calendar = new \Calendar;
+echo '<h2><a href="#show-month-year-number-in-day-pattern">#</a> <a name="show-month-year-number-in-day-pattern">Show month / year number in day pattern</a></h2>';
+$code = <<<'EOD'
+$calendar = new \Calendar;
+echo $calendar
+	->setExtraDatePattern(new \DateTime('2012-01-14'), '%d <b>(%m. %y)</b>')
+	->render(1, 2012);
+EOD;
+show($code);
+eval($code);
+
 ?>
 </body>
 </html>
