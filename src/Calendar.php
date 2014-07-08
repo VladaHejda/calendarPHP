@@ -371,7 +371,7 @@ class Calendar
 
 	/**
 	 * @param \DateTime $date
-	 * @param string $class
+	 * @param string|array $class
 	 * @return self
 	 */
 	public function setExtraDateClass(\DateTime $date, $class)
@@ -380,14 +380,19 @@ class Calendar
 		if (!isset($this->extraDateClass[$stamp])) {
 			$this->extraDateClass[$stamp] = [];
 		}
-		$this->extraDateClass[$stamp][] = (string) $class;
+		if (!is_array($class)) {
+			$class = [$class];
+		}
+		foreach ($class as $c) {
+			$this->extraDateClass[$stamp][] = (string) $c;
+		}
 		return $this;
 	}
 
 
 	/**
 	 * @param \DatePeriod $period
-	 * @param string $class
+	 * @param string|array $class
 	 * @return self
 	 */
 	public function setExtraPeriodClass(\DatePeriod $period, $class)

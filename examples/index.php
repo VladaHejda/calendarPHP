@@ -305,7 +305,7 @@ eval($code);
 
 
 $calendar = new \Calendar;
-echo '<h2><a href="#show-month-year-number-in-day-pattern">#</a> <a name="show-month-year-number-in-day-pattern">Show month / year number in day pattern</a></h2>';
+echo '<h2><a href="#show-month-year-number-in-day-pattern">#</a> <a name="show-month-year-number-in-day-pattern">Show month/year number in day pattern</a></h2>';
 $code = <<<'EOD'
 $calendar = new \Calendar;
 echo $calendar
@@ -324,6 +324,21 @@ $calendar = new \Calendar;
 echo $calendar
 	->setMonthPattern('%e. %s (%y)')
 	->render(2, 2012);
+EOD;
+show($code);
+eval($code);
+
+
+
+$calendar = new \Calendar;
+echo '<h2><a href="#add-array-of-classes-for-certain-date-period">#</a> <a name="add-array-of-classes-for-certain-date-period">Add array of classes for certain date/period</a></h2>';
+$code = <<<'EOD'
+$calendar = new \Calendar;
+$period = new \DatePeriod(new \DateTime('2012-03-20'), new DateInterval('P1D'), 4);
+echo $calendar
+	->setExtraDateClass(new \DateTime('2012-03-10'), ['funny', 'italic'])
+	->setExtraPeriodClass($period, ['funny', 'italic'])
+	->render(3, 2012);
 EOD;
 show($code);
 eval($code);
