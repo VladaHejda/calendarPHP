@@ -343,6 +343,21 @@ EOD;
 show($code);
 eval($code);
 
+
+
+$calendar = new \Calendar;
+echo '<h2><a href="#doubled-class-prevention">#</a> <a name="doubled-class-prevention">Doubled class prevention (see source code)</a></h2>';
+$code = <<<'EOD'
+$calendar = new \Calendar;
+$period = new \DatePeriod(new \DateTime('2012-04-16'), new DateInterval('P1D'), 5);
+echo $calendar
+	->setExtraPeriodClass($period, 'funny')
+	->setExtraDateClass(new \DateTime('2012-04-17'), 'funny')
+	->render(4, 2012);
+EOD;
+show($code);
+eval($code);
+
 ?>
 </body>
 </html>

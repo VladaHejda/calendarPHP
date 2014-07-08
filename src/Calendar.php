@@ -384,7 +384,7 @@ class Calendar
 			$class = [$class];
 		}
 		foreach ($class as $c) {
-			$this->extraDateClass[$stamp][] = (string) $c;
+			$this->extraDateClass[$stamp][(string) $c] = TRUE;
 		}
 		return $this;
 	}
@@ -550,7 +550,7 @@ class Calendar
 	{
 		$stamp = self::generateStamp($date);
 		if (isset($this->extraDateClass[$stamp])){
-			return $this->extraDateClass[$stamp];
+			return array_keys($this->extraDateClass[$stamp]);
 		}
 		return [];
 	}
