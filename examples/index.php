@@ -358,6 +358,22 @@ EOD;
 show($code);
 eval($code);
 
+
+
+$calendar = new \Calendar;
+echo '<h2><a href="#day-cell-content-callback">#</a> <a name="day-cell-content-callback">Day cell content callback</a></h2>';
+$code = <<<'EOD'
+$calendar = new \Calendar;
+$increase = function(\DateTime $date) {
+	return $date->format('j') + 10;
+};
+echo $calendar
+	->setDayCellContentCallback($increase)
+	->render(5, 2012);
+EOD;
+show($code);
+eval($code);
+
 ?>
 </body>
 </html>

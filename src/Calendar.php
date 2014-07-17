@@ -4,9 +4,8 @@
  * Calendar renderer
  * @author 2012-2014 jsem@hejdav.cz Vladislav Hejda
  *
- * @todo days callbacks
  * @todo if class set to FALSE, do not render any class
- * @todo year delegate %y
+ * @todo %w week in day pattern
  *
  * In day/week pattern use:
  *   %d = Arabic number
@@ -42,6 +41,9 @@ class Calendar
 	protected $dayPattern = '%d',
 		$weekPattern = '%d.',
 		$outsideDayPattern = NULL;
+
+	/** @var callable */
+	protected $dayCellContentCallback;
 
 	/** @var bool */
 	protected $includeWeekNumbers = TRUE;
@@ -173,6 +175,18 @@ class Calendar
 	public function setOutsideDayPattern($pattern)
 	{
 		$this->outsideDayPattern = $pattern === NULL ? NULL : (string) $pattern;
+		return $this;
+	}
+
+
+	/**
+	 * In callback return NULL (or nothing) for fallback into pattern.
+	 * @param callable $callback
+	 * @return self
+	 */
+	public function setDayCellContentCallback(callable $callback)
+	{
+		$this->dayCellContentCallback = $callback;
 		return $this;
 	}
 
@@ -862,7 +876,14 @@ class Calendar
 				if (count($classes)) {
 					$body .= ' class="' . implode(' ', $classes) . '"';
 				}
-				$body .= '>' . $this->applyPattern($this->dayPattern, $date) . '</td>';
+				$content = NULL;
+				if ($this->dayCellContentCallback) {
+					$content = call_user_func($this->dayCellContentCallback, $date);
+				}
+				if ($content === NULL) {
+					$content = $this->applyPattern($this->dayPattern, $date);
+				}
+				$body .= '>' . $content . '</td>';
 				++$day;
 			}
 
