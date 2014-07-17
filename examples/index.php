@@ -374,6 +374,23 @@ EOD;
 show($code);
 eval($code);
 
+
+
+$calendar = new \Calendar;
+echo '<h2><a href="#apply-day-cell-content-callback-to-outside-days">#</a> <a name="apply-day-cell-content-callback-to-outside-days">Apply day cell content callback to outside days</a></h2>';
+$code = <<<'EOD'
+$calendar = new \Calendar;
+$increase = function(\DateTime $date) {
+	return $date->format('j') + 10;
+};
+echo $calendar
+	->setDayCellContentCallback($increase)
+	->setApplyCallbackOnOutsideDays(TRUE)
+	->render(5, 2012);
+EOD;
+show($code);
+eval($code);
+
 ?>
 </body>
 </html>

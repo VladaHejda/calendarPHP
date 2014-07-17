@@ -46,6 +46,9 @@ class Calendar
 	protected $dayCellContentCallback;
 
 	/** @var bool */
+	protected $applyCallbackOnOutsideDays = FALSE;
+
+	/** @var bool */
 	protected $includeWeekNumbers = TRUE;
 
 	/** @var string */
@@ -187,6 +190,17 @@ class Calendar
 	public function setDayCellContentCallback(callable $callback)
 	{
 		$this->dayCellContentCallback = $callback;
+		return $this;
+	}
+
+
+	/**
+	 * @param bool $value
+	 * @return self
+	 */
+	public function setApplyCallbackOnOutsideDays($value = TRUE)
+	{
+		$this->applyCallbackOnOutsideDays = $value;
 		return $this;
 	}
 
@@ -837,8 +851,14 @@ class Calendar
 					if (isset($this->dayClasses[$this->shift[$i]])) {
 						$classes[] = $this->dayClasses[$this->shift[$i]];
 					}
-					$body .= $indent(3) . '<td class="' . implode(' ', $classes).'">'
-						. $this->applyPattern($outsideDayPattern, $date, $this->applyExtraPatternsToOutsideDays) . '</td>';
+					$content = NULL;
+					if ($this->applyCallbackOnOutsideDays && $this->dayCellContentCallback) {
+						$content = call_user_func($this->dayCellContentCallback, $date);
+					}
+					if ($content === NULL) {
+						$content = $this->applyPattern($outsideDayPattern, $date, $this->applyExtraPatternsToOutsideDays);
+					}
+					$body .= $indent(3) . '<td class="' . implode(' ', $classes).'">' . $content . '</td>';
 				}
 				$daysBeforeDumped = TRUE;
 				$startingDay = count($this->daysBefore);
@@ -861,8 +881,14 @@ class Calendar
 					if (isset($this->dayClasses[$this->shift[$columnNo]])) {
 						$classes[] = $this->dayClasses[$this->shift[$columnNo]];
 					}
-					$body .= $indent(3) . '<td class="' . implode(' ', $classes).'">'
-						. $this->applyPattern($outsideDayPattern, $date, $this->applyExtraPatternsToOutsideDays) . '</td>';
+					$content = NULL;
+					if ($this->applyCallbackOnOutsideDays && $this->dayCellContentCallback) {
+						$content = call_user_func($this->dayCellContentCallback, $date);
+					}
+					if ($content === NULL) {
+						$content = $this->applyPattern($outsideDayPattern, $date, $this->applyExtraPatternsToOutsideDays);
+					}
+					$body .= $indent(3) . '<td class="' . implode(' ', $classes).'">' . $content . '</td>';
 					++$daysAfter;
 					continue;
 				}
