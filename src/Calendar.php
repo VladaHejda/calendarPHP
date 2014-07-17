@@ -46,7 +46,7 @@ class Calendar
 	protected $dayCellContentCallback;
 
 	/** @var bool */
-	protected $applyCallbackOnOutsideDays = FALSE;
+	protected $applyCallbackToOutsideDays = FALSE;
 
 	/** @var bool */
 	protected $includeWeekNumbers = TRUE;
@@ -198,9 +198,9 @@ class Calendar
 	 * @param bool $value
 	 * @return self
 	 */
-	public function setApplyCallbackOnOutsideDays($value = TRUE)
+	public function setApplyCallbackToOutsideDays($value = TRUE)
 	{
-		$this->applyCallbackOnOutsideDays = $value;
+		$this->applyCallbackToOutsideDays = $value;
 		return $this;
 	}
 
@@ -852,7 +852,7 @@ class Calendar
 						$classes[] = $this->dayClasses[$this->shift[$i]];
 					}
 					$content = NULL;
-					if ($this->applyCallbackOnOutsideDays && $this->dayCellContentCallback) {
+					if ($this->applyCallbackToOutsideDays && $this->dayCellContentCallback) {
 						$content = call_user_func($this->dayCellContentCallback, $date);
 					}
 					if ($content === NULL) {
@@ -882,7 +882,7 @@ class Calendar
 						$classes[] = $this->dayClasses[$this->shift[$columnNo]];
 					}
 					$content = NULL;
-					if ($this->applyCallbackOnOutsideDays && $this->dayCellContentCallback) {
+					if ($this->applyCallbackToOutsideDays && $this->dayCellContentCallback) {
 						$content = call_user_func($this->dayCellContentCallback, $date);
 					}
 					if ($content === NULL) {

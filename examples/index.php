@@ -385,7 +385,7 @@ $increase = function(\DateTime $date) {
 };
 echo $calendar
 	->setDayCellContentCallback($increase)
-	->setApplyCallbackOnOutsideDays(TRUE)
+	->setApplyCallbackToOutsideDays(TRUE)
 	->render(5, 2012);
 EOD;
 show($code);
