@@ -1,0 +1,15 @@
+{
+	"name": "vladahejda/calendarphp",
+	"description": "PHP calendar",
+	"keywords": ["calendar"],
+	"license": ["GPL-3.0+"],
+	"authors": [
+		{
+			"name": "Vladislav Hejda",
+			"homepage": "http://hejdav.cz"
+		}
+	],
+	"autoload": {
+		"classmap": ["src"]
+	}
+}
