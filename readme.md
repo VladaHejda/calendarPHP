@@ -8,12 +8,21 @@ Usage with examples
 
 Watch [usage and examples](http://phpcalendar.hejdav.cz) page.
 
-Download
---------
+Download / Install
+------------------
 
 - [Calendar.php](https://raw.githubusercontent.com/VladaHejda/calendarPHP/master/src/Calendar.php)
 
 *(right click, save target as..)*
+
+- or use composer:
+
+```json
+"require": {
+	"vladahejda/calendarphp": "dev-master"
+}
+```
+
 
 License
 -------
